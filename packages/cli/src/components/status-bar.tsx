@@ -8,7 +8,6 @@ export function StatusBar(){
                 --            
             </text>
             <text>opus-4-6</text>
-
         </box>
     )
 }
