@@ -5,11 +5,14 @@ type Props = {
     disabled?: boolean;
 }
 
+
+
 export function InputBar({ onSubmit, disabled = false}: Props){
    return (
     <box width="100%" alignItems="center">
         <box
-            // add left border
+            border ={["left"]}
+            borderColor="cyan"
         >
         <box
           position="relative"
