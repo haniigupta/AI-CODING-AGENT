@@ -1,4 +1,6 @@
-export const COMMANDS = [
+import type {Command} from "./types"
+
+export const COMMANDS: Command[] = [
     {
         name: "new",
         description: "Start a new conversation",
