@@ -35,5 +35,19 @@ export function useCommandMenu(): UseCommandMenuReturn {
         }
 
         const prefix = text.startsWith("/") ? text.slice(1) : null;
+        if(prefix !== null && prefix.includes(" ")){
+            setShowCommandMenu(true);
+        } else {
+            setShowCommandMenu(false);
+        }
+    }
+
+    // resolve a cmd (return cmd, caller handles execution)
+    const resolveCommand = (index : number) : Command | undefined => {
+        const command = filteredCommands[index];
+        if(command){
+            setShowCommandMenu(false);
+        }
+        return command;
     }
 }
