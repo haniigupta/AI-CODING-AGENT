@@ -50,4 +50,42 @@ export function useCommandMenu(): UseCommandMenuReturn {
         }
         return command;
     }
+    // arrow key movement
+    useKeyboard((key) => {
+        if(!showCommandMenu){
+            return;
+        }
+        if(key.name === "escape"){
+            setShowCommandMenu(false);
+        } else if(key.name === "up"){
+            key.preventDefault();
+            setSelectedIndex((i : number) => {
+                const newIndex = Math.max(0, i - 1);
+                // keep the selected item in view
+                const scrollbox = scrollRef.current;
+                if(scrollbox && newIndex < scrollbox.scrollTop){
+                    scrollbox.scrollTo(newIndex);
+                }
+                return newIndex;
+            })
+        } else if(key.name === "down"){
+            key.preventDefault();
+            setSelectedIndex((i : number) => {
+                if(filteredCommands.length === 0){
+                    return 0;
+                }
+                const newIndex = Math.min(filteredCommands.length - 1, i + 1);
+                // keep the selected item in view
+                const scrollbox = scrollRef.current;
+                if(scrollbox){
+                    const viewportHeight = scrollbox.viewport.height;
+                    const visibleEnd = scrollbox.scrollTop + viewportHeight -1;
+                    if(newIndex > visibleEnd){
+                        scrollbox.scrollTo(newIndex - viewportHeight + 1);
+                    }
+                }
+                return newIndex;
+            })
+        }
+    })
 }
