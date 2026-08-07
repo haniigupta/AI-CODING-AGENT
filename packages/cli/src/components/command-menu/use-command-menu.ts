@@ -88,4 +88,14 @@ export function useCommandMenu(): UseCommandMenuReturn {
             })
         }
     })
+
+    return {
+        showCommandMenu,
+        commandQuery,
+        selectedIndex,
+        scrollRef,
+        handleContentChange,
+        resolveCommand,
+        setSelectedIndex,
+    }
 }
