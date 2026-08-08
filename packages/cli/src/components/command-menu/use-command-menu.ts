@@ -1,6 +1,6 @@
 import {useRef, useState, useMemo, type RefObject} from "react";
 import type {ScrollBarRenderable, ScrollBoxRenderable} from "@opentui/core";
-import { useKeyboard } from "@opentui/core";
+import { useKeyboard } from "@opentui/react";
 import { getFilteredCommands } from "./filter-cmds";
 import { Command } from "./types";
 
@@ -35,7 +35,7 @@ export function useCommandMenu(): UseCommandMenuReturn {
         }
 
         const prefix = text.startsWith("/") ? text.slice(1) : null;
-        if(prefix !== null && prefix.includes(" ")){
+        if(prefix !== null){
             setShowCommandMenu(true);
         } else {
             setShowCommandMenu(false);

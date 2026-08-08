@@ -1,13 +1,12 @@
 import {useRef, useCallback, useEffect} from "react"
 import type { TextareaRenderable } from "@opentui/core";
-import { useRenderer } from "@opentui/core";
+import  { useRenderer } from "@opentui/react";
 import type { KeyBinding } from "@opentui/core";
-import { StatusBar } from "./status-bar";
 import {EmptyBorder} from "./border";
 import { StatusBar } from "./status-bar";
 import { CommandMenu } from "./command-menu";
 import type { Command } from "./command-menu/types";
-import type { useCommandMenu } from "./command-menu/use-command-menu";
+import { useCommandMenu } from "./command-menu/use-command-menu";
 
 type Props = {
     onSubmit : (text: string) => void;
@@ -35,6 +34,19 @@ export function InputBar({ onSubmit, disabled = false}: Props){
         resolveCommand,
         setSelectedIndex,
     } = useCommandMenu();
+
+    const handleCommandExecute = useCallback((index: number) => {
+        const command = resolveCommand(index);
+        handleCommand(command);
+    }, []);
+
+
+    const handleTextareaContentChange = useCallback(() => {
+        const textarea = textareaRef.current;
+        if(!textarea) return;
+
+        handleContentChange(textarea.plainText);
+    }, []);
 
     const handleSubmit = useCallback(() => {
         if(disabled) return;
@@ -92,6 +104,7 @@ export function InputBar({ onSubmit, disabled = false}: Props){
             border ={["left"]}
             borderColor="cyan"
         >
+            
         <box
           position="relative"
           justifyContent="center"
@@ -101,7 +114,7 @@ export function InputBar({ onSubmit, disabled = false}: Props){
           width =  "100%"
           gap={1}
         >
-            {true && (
+            {showCommandMenu && (
                 <box
                     position="absolute"
                     bottom="100%"
@@ -111,7 +124,11 @@ export function InputBar({ onSubmit, disabled = false}: Props){
                     zIndex={10}
                 >
                     <CommandMenu
-                        query=""
+                        query={commandQuery}
+                        selectedIndex={selectedIndex}
+                        scrollRef={scrollRef}
+                        onSelect={setSelectedIndex}
+                        onExecute={handleCommandExecute}
                      />
 
 
@@ -119,8 +136,10 @@ export function InputBar({ onSubmit, disabled = false}: Props){
 
             )}
             <textarea 
+              ref={textareaRef}
               focused={!disabled}
               keyBindings={TEXTAREA_KEY_BINDINGS}
+              onContentChange={handleTextareaContentChange}
               placeholder={`Ask anything..."Fix a bug in DB"`}
             />
             <StatusBar />
