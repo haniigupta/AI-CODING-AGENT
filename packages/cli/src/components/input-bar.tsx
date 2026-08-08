@@ -36,6 +36,32 @@ export function InputBar({ onSubmit, disabled = false}: Props){
         setSelectedIndex,
     } = useCommandMenu();
 
+    const handleSubmit = useCallback(() => {
+        if(disabled) return;
+        const textarea = textareaRef.current;
+        if(!textarea) return;
+        const text = textarea.plainText.trim();
+        if(text.length === 0) return;
+        onSubmit(text);
+        textarea.setText("");
+
+    }, [disabled, onSubmit]);
+
+    const handleCommand = useCallback((command: Command | undefined) => {
+        const textarea = textareaRef.current;
+        if(!textarea || !command) return;
+
+        textarea.setText("");
+        
+        if(command.action){
+            command.action({
+                exit: () => renderer.destroy(),
+            });
+        } else {
+            textarea.insertText(command.value + " ");
+        }
+    }, [renderer]);
+
     // wrap us textt area submit handler
     useEffect(() => {
         const textarea = textareaRef.current;
