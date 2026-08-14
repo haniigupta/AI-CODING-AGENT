@@ -143,6 +143,7 @@ export function InputBar({ onSubmit, disabled = false}: Props){
               placeholder={`Ask anything..."Fix a bug in DB"`}
             />
             <StatusBar />
+            
         </box>
 
         </box>
