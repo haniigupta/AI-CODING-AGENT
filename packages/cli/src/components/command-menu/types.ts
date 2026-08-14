@@ -4,7 +4,7 @@ export type CommandContext = {
 
 export type Command = {
     name : string;
-    desciption: string;
+    description: string;
     value: string;
     action?: (ctx: CommandContext) => void | Promise<void>;
 }

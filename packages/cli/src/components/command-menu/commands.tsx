@@ -1,4 +1,4 @@
-import type {Command} from "./types"
+import type { Command } from "./types"
 
 export const COMMANDS: Command[] = [
     {
@@ -49,8 +49,8 @@ export const COMMANDS: Command[] = [
     {
         name: "exit",
         description: "Quit the application",
-        value : "/exit",
-        action : (ctx) => {
+        value: "/exit",
+        action: (ctx) => {
             ctx.exit();
         },
     },
