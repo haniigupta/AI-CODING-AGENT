@@ -111,7 +111,7 @@ export function InputBar({ onSubmit, disabled = false}: Props){
           paddingX={2}
           paddingY={1}
           backgroundColor="#1A1A24"
-          width =  "100%"
+          width = "100%"
           gap={1}
         >
             {showCommandMenu && (
@@ -141,7 +141,9 @@ export function InputBar({ onSubmit, disabled = false}: Props){
               keyBindings={TEXTAREA_KEY_BINDINGS}
               onContentChange={handleTextareaContentChange}
               placeholder={`Ask anything..."Fix a bug in DB"`}
-            />
+              width="100%"
+              flexShrink={0}         
+                />
             <StatusBar />
             
         </box>
